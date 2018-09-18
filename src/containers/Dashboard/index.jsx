@@ -12,6 +12,9 @@ const P = styled.p`
 const H2 = styled.h2`
   text-align: center;
 `
+const RowCentered = styled(Row)`
+  text-align: center;
+`
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -59,7 +62,12 @@ class Dashboard extends React.Component {
                 <Col xs={12}>
                   <P>{this.props.btcPrice}</P>
                 </Col>
-              </Row>  
+              </Row>
+              <RowCentered>
+                <Button bsStyle="primary" onClick={this.props._updateBtcPrice}>
+                  Refresh BTC Price
+                </Button>
+              </RowCentered>
             </Col>
             <Col xs={12} sm={6}>
               <Row>
@@ -70,6 +78,11 @@ class Dashboard extends React.Component {
                   <P>{this.props.ethPrice}</P>
                 </Col>
               </Row>
+              <RowCentered>
+                <Button bsStyle="primary" onClick={this.props._updateEthPrice}>
+                  Refresh ETH Price
+                </Button>
+              </RowCentered>
             </Col>
 
           </Row>
