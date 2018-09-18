@@ -5,7 +5,7 @@ export const updateBtcPrice = () => {
     axios
     .get('https://api.pro.coinbase.com/products/BTC-USD/ticker')
     .then(response => {
-      const price = response.price;
+      const price = Number(response.data.price).toFixed(2);
       return dispatch({
         type: 'updateBTCPrice',
         btcPrice: price
@@ -23,7 +23,7 @@ export const updateEthPrice= () => {
     axios
       .get('https://api.pro.coinbase.com/products/ETH-USD/ticker')
       .then(response => {
-        const price = response.price;
+        const price = Number(response.data.price).toFixed(2);
         return dispatch({
           type: 'updateETHPrice',
           ethPrice: price

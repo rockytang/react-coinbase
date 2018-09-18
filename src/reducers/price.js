@@ -1,9 +1,9 @@
 import { fromJS } from 'immutable';
 
-const initialState = {
+const initialState = fromJS({
   btcPrice: null,
   ethPrice: null
-};
+});
 
 const price = (state = initialState, action) => {
   const clone = fromJS(state);
