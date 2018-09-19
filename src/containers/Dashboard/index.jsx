@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Button, Navbar } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Navbar, Alert, Form, FormGroup, FormControl } from 'react-bootstrap';
 import { updateBtcPrice, updateEthPrice } from '../../actions/price';
 import styled from 'styled-components';
+import getWeb3 from '../../utils/getWeb3';
 
 const P = styled.p`
   font-size: 22px;
@@ -21,12 +22,25 @@ class Dashboard extends React.Component {
     super(props);
   }
 
+  state = { 
+    web3: null, 
+    accounts: null,
+    toAddress: ""
+  }
+
   componentWillMount() {
     this.props._updateBtcPrice();
     this.props._updateEthPrice();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    try {
+      const web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts();
+      this.setState({ web3, accounts });
+    } catch (error) {
+      console.log(error);
+    }
     // this.setBtcInterval = setInterval(
     //   () => this.props._updateBtcPrice(),
     //   60000
@@ -42,7 +56,33 @@ class Dashboard extends React.Component {
     clearInterval(this.setEthInterval);
   }
   
-  render () {
+  handleSubmit() {
+    // send $5 worth of ETH
+    console.log('in handle submit')
+    let amountOfEth = 5 / Number(this.props.ethPrice);
+    amountOfEth = amountOfEth.toString();
+    amountOfEth = this.state.web3.utils.toWei(amountOfEth, 'ether');
+    this.state.web3.eth.sendTransaction({
+      from: this.state.accounts[0],
+      to: this.state.toAddress,
+      value: amountOfEth
+    }, (err, transactionHash) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(transactionHash);
+    })
+  }
+
+  handleChange(e) {
+    const { target } = e;
+    const { name, value } = target;
+    this.setState({
+      [name]: value
+    })
+  }
+
+  render() {
     return (
       <div>
         <Navbar inverse>
@@ -52,6 +92,15 @@ class Dashboard extends React.Component {
             </Navbar.Brand>
           </Navbar.Header>
         </Navbar>
+        {this.state.web3 ? (
+          <Alert bsStyle="success">
+            <strong>Web3 connected successfully.</strong> You may now transfer ETH.
+          </Alert>
+        ) : (
+          <Alert bsStyle="warning">
+            <strong>Web3 not detected.</strong> Please install metamask to transfer ETH.
+          </Alert>          
+        )}
         <Grid>
           <Row>
             <Col xs={12} sm={6}>
@@ -83,6 +132,17 @@ class Dashboard extends React.Component {
                   Refresh ETH Price
                 </Button>
               </RowCentered>
+              <Form>
+                <FormGroup>
+                  <FormControl 
+                    name="toAddress"
+                    type="text" 
+                    onChange={this.handleChange.bind(this)}
+                    placeholder="Send to Address"
+                  />
+                  <Button onClick={this.handleSubmit.bind(this)}>Send ETH</Button>
+                </FormGroup>
+              </Form>
             </Col>
 
           </Row>
