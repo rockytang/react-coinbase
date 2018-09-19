@@ -2,7 +2,9 @@
   "name": "react-coinbase",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://rockytang.github.io/react-coinbase",
   "devDependencies": {
+    "gh-pages": "^2.0.0",
     "react-scripts": "1.1.5"
   },
   "dependencies": {
@@ -22,6 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   }
 }

@@ -41,14 +41,14 @@ class Dashboard extends React.Component {
     } catch (error) {
       console.log(error);
     }
-    // this.setBtcInterval = setInterval(
-    //   () => this.props._updateBtcPrice(),
-    //   60000
-    // );
-    // this.setEthInterval = setInterval(
-    //   () => this.props._updateEthPrice(),
-    //   60000
-    // )
+    this.setBtcInterval = setInterval(
+      () => this.props._updateBtcPrice(),
+      60000
+    );
+    this.setEthInterval = setInterval(
+      () => this.props._updateEthPrice(),
+      60000
+    )
   }
 
   componentWillUnmount() {
@@ -58,7 +58,6 @@ class Dashboard extends React.Component {
   
   handleSubmit() {
     // send $5 worth of ETH
-    console.log('in handle submit')
     let amountOfEth = 5 / Number(this.props.ethPrice);
     amountOfEth = amountOfEth.toString();
     amountOfEth = this.state.web3.utils.toWei(amountOfEth, 'ether');
@@ -70,6 +69,7 @@ class Dashboard extends React.Component {
       if (err) {
         console.log(err);
       }
+      // TODO: 
       console.log(transactionHash);
     })
   }
