@@ -1,5 +1,5 @@
 # Prices Dashboard
-**Prices Dashboard** uses the Coinbase API to refresh BTC and ETH prices every 60 seconds.
+A React/Redux app using the Coinbase API to refresh BTC and ETH prices every 60 seconds.
 
 **This dashboard is deployed on** https://rockytang.github.io/react-coinbase/  
   
