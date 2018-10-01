@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router basename="">
+        <Router basename="/react-coinbase">
           <Route exact path='/' component={Dashboard} />
         </Router>
       </Provider>
