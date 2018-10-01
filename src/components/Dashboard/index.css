@@ -1,0 +1,15 @@
+.text-center {
+  text-align: center;
+}
+
+.bigger-font {
+  font-size: 22px;
+}
+
+.padding-top-40 {
+  padding-top: 40px;
+}
+
+.wrap-word {
+  word-wrap: break-word;
+}
